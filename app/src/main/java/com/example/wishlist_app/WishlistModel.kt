@@ -9,6 +9,10 @@ package com.example.wishlist_app
  * */
 class WishlistModel {
     companion object  {
+        val itemName: String = ""
+        val itemLink : String = ""
+        val itemPrice : Float = 0.0f  //this is the method for initializing floating point numbers
+
         private var lastInputId = 0
         fun createWishlist(numWishList: Int) : ArrayList<WishlistModel> {  //this will output an array consisting of the list of WishListModel
             val MutableWishList = ArrayList<WishlistModel>()
@@ -16,3 +20,4 @@ class WishlistModel {
         }
     }
 }
+
