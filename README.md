@@ -1,6 +1,6 @@
-# Android Project 2 - *Name of App Here*
+# Android Project 2 - *Wishlist-App*
 
-Submitted by: **Your Name Here**
+Submitted by: **Ayan Das**
 
 **Name of your app** is a wishlist app that helps the user keep track of what they want to buy.
 
