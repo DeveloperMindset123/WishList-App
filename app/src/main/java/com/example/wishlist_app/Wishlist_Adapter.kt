@@ -1,6 +1,7 @@
 package com.example.wishlist_app
 
 import android.text.Layout
+import com.example.wishlist_app.WishlistItem  //this is how we can import kotlin classes
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,7 +24,27 @@ import java.text.ParsePosition
  * */
 
 //in the documentation, the parameter was originally named dataSet, for the context of this logic, I renamed it to WishList_items instead, and changed datatype from Array<String> --> Array<WishListItem> as that is the datamodel we have defined.
-class Wishlist_Adapter(private val WishList_items: Array<String>) {  //note that in the context of this project, the parameter the Wishlist_Adapter accepts may differ, modify as needed
+
+//note: ensure that the Array type is set to WishlistItem, which is the datatype we are working with, otherwise, we may run into some errors. (it's case sensetive to the point that Array and ArrayList will cause type mismatch errors)
+class WishlistAdapter(private val WishList_items: ArrayList<WishlistItem>) : RecyclerView.Adapter<WishlistAdapter.ViewHolder>() {  //note that in the context of this project, the parameter the Wishlist_Adapter accepts may differ, modify as needed
+    /**
+     * We can break down the components in the line in the following manner:
+     * 'class WishListAdapter': This declares a new class named 'WishlistAdapter'.
+     *
+     * (private val WihsList_items: ArrayList<WishListItem>): This is the primary constructor of the WishListAdapter class. It takes a single parameter 'WishList_items' which is a essentially a list of WishListItem objects.
+     *
+     * The list is what the adapter will use to bind data to the views that are displayed within the Recyclerview. The 'private val' means that this parameter is a private immutable property of instances 'WishlistAdapter'.
+     *
+     * RecyclerView.Adapter<WishlistAdapter.ViewHolder>(): Indicates that 'WishlistAdapter' is extending the generic class 'RecyclerView.Adapter' (in java we would have this function extends some other existing function in regards to syntax, kotlin varies slightly).
+     *
+     * The 'ViewHolder' is a nested class within 'WishlistAdapter' which holds the references to the views for each data item. The 'ViewHolder' pattern increases performance by ensuring that view lookup is only done a few times, rather than for every item and for every layout pass.
+     *
+     * The 'WishListAdapter' class will have to override at least three methods:
+     * * * onCreateViewHolder: Refer to their individual definiions in the comments below
+     * * * onBindViewHolder : Refer to their individual definiions in the comments below
+     * * * getItemCount : Refer to their individual definitions in the comments below
+     *
+     * */
 
     /**
      * Provide a reference to the type of views that is being used
@@ -64,9 +85,29 @@ class Wishlist_Adapter(private val WishList_items: Array<String>) {  //note that
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
 
         //get element from the dataset at this position and replace the contents of the view of an element (we can specify the text we want to display)
-        viewHolder.DisplayTitle.text=titleList[position]  //note that dataSet1 hasn't been defined yet, I will add some dummy data for now, but the end goal is to have real time updates based on user input
-        viewHolder.DisplayLink.text=linkList[position]
-        viewHolder.DisplayPrice.text=priceList[position]
+        /**
+        * in this case, we will be updating the text view using the WishtList_items array and the corresponding position value it contains
+         *
+         * Think of wishList_items to be defined as the following
+         *
+         * WishList_items = [
+         *  {
+         *      DisplayTitle: "User input for name of the item"
+         *      DisplayPrice: "User input for the price of the item"
+         *      DisplayLink: "User input for the link to the item itself"
+         *  },
+         *
+         *  ... //added based on the input of the user
+         * ]
+         *
+         *
+        * */
+
+
+        val item = WishList_items[position]
+        viewHolder.DisplayTitle.text=item.itemName
+        viewHolder.DisplayLink.text=item.itemLink
+        viewHolder.DisplayPrice.text=item.itemPrice
 
         //one method is to save the user input onto three individual arrays of strings, or simply pass in the dataModel and the corresponding position, because we would have to save the data in one place (thus the uses of data model since existing datatypes may not be suitable for the logic related to the program)
 
@@ -75,7 +116,14 @@ class Wishlist_Adapter(private val WishList_items: Array<String>) {  //note that
 
 //define the last of the three methods
 
-    override fun getTitleCount() = titleList.size
-    override fun getLinkCount() = linkList.size
-    override fun getPriceCount() = priceList.size
+    override fun getItemCount() = WishList_items.size  //simply returns the size of the Wishlist_items array
 }
+
+/**
+ * Understanding the purpose of the override aspect of a function in Kotlin:
+ *
+ * Overriding a function (or any other parameter) means that it already exists in a superclass and you're declaring that your inherited class does the same thing, but with modified behavior.
+ *
+ * Essentially it overrides the default behavior with a custom behavior suitable for the logic of the application.
+ *
+**/
