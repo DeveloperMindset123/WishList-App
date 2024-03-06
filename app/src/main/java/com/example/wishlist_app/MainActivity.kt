@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 class MainActivity : AppCompatActivity() {
@@ -42,11 +43,37 @@ class MainActivity : AppCompatActivity() {
         //define the adapter
         adapter = WishlistAdapter(wishList)  //pass in the wishList item, which is of WishListItem datatype, as that is the data class we have instantiated, and now we have instantiated a object named adapter which is of WishListAdapter datatype
 
-        wishListRecyclerView.adapter = adapter  //
-        //val wishList_adapter = Wishlist_Adapter(displayTitle)  //pass in the string based dataset that it will accept
+        wishListRecyclerView.adapter = adapter  //we also need to ensure that the adapter class recognizes the WishlistAdapter class (refer to the WishListAdapter class declation to see how the generic type was extended)
+
+        wishListRecyclerView.layoutManager=LinearLayoutManager(this) //speciy the layout manager the RecyclerView should follow
+
+        /**
+         * Additional information in regards to the wishListRecyclerview layout managers:
+         *
+         * LinearLayoutManager: Arranges the items in a one-dimensional list
+         *
+         * GridLayoutManager: arranges the items in a two-dimensional grid
+         *
+         * StaggeredGridLayoutManager: is similar to GridLayoutManager, but it does not require the items in a row have the same height (for vertical grids) or items in the same column have the same width (for horizontal grids). The result is that the items in a row or column can end up offsetting each other.
+         *
+         * Reference(s): [https://developer.android.com/develop/ui/views/layout/recyclerview, https://medium.com/1mgofficial/how-recyclerview-works-internally-71290de5d2c4]
+         * */
+
+        //val wishList_adapter = Wishlist_Adapter(displayTitle)  --> pass in the string based dataset that it will accept
 
         //reference the recycler view within the activity_main.xml file
         //val recyclerView : RecyclerView = findViewById(R.id.recyclerView)
-        recyclerView.adapter = wishList_adapter  //specify the target adapter
+
+        //define the logic for the texts that user inputs to be displayed upon clicking on the submit button
+        submitButton.setOnClickListener{
+            val name = itemNameEditText.text.toString()  //extract the text from the title placeholder editText view and convert it to a string
+            val link = itemLinkEditText.text.toString()  //extract the text from the link placeholder editText view and convert it to a string
+            val price = itemLinkEditText.text.toString()  //extract the text from the link placeholder editText view and convert it to a string
+
+            wishList.add(WishlistItem(name, link, price))  //update the data class with the newly extracted information [add is similar to appending in a list]
+            adapter.notifyItemInserted(wishList.size - 1)
+        }
+
+       // recyclerView.adapter = wishList_adapter  //specify the target adapter
     }
 }
