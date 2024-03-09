@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
@@ -46,7 +47,7 @@ class MainActivity : AppCompatActivity() {
         wishListRecyclerView.adapter = adapter  //we also need to ensure that the adapter class recognizes the WishlistAdapter class (refer to the WishListAdapter class declation to see how the generic type was extended)
 
         wishListRecyclerView.layoutManager=LinearLayoutManager(this) //speciy the layout manager the RecyclerView should follow
-
+//using GridLayoutManager helps create table based views, consisitng of rows and columns (for now I used LinearLayoutManager instead)
         /**
          * Additional information in regards to the wishListRecyclerview layout managers:
          *
@@ -68,7 +69,7 @@ class MainActivity : AppCompatActivity() {
         submitButton.setOnClickListener{
             val name = itemNameEditText.text.toString()  //extract the text from the title placeholder editText view and convert it to a string
             val link = itemLinkEditText.text.toString()  //extract the text from the link placeholder editText view and convert it to a string
-            val price = itemLinkEditText.text.toString()  //extract the text from the link placeholder editText view and convert it to a string
+            val price = itemPriceEditText.text.toString()  //extract the text from the link placeholder editText view and convert it to a string
 
             wishList.add(WishlistItem(name, link, price))  //update the data class with the newly extracted information [add is similar to appending in a list]
             adapter.notifyItemInserted(wishList.size - 1)

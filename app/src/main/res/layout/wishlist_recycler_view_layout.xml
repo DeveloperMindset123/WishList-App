@@ -2,8 +2,13 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_marginTop="7dp"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="40dp">
+
+    <!--Requires manual adjustment of the height, play around with it a bit to find what works based on the screen and content of the application, using wrap_content or match_parent will take up too much screen-->
+
+    <!--Changing font opacity for the name of the store-->
 
     <TextView
         android:id="@+id/DisplayTitle"
@@ -14,12 +19,11 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.076"
+        app:layout_constraintHorizontal_bias="0.093"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.053" />
+        app:layout_constraintVertical_bias="0.052" />
 
-    <!--Changing font opacity for the name of the store-->
 
     <TextView
         android:id="@+id/DisplayPrice"
@@ -43,10 +47,10 @@
         android:textSize="14dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.994"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/DisplayTitle"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.109" />
+        app:layout_constraintTop_toBottomOf="@+id/DisplayPrice"
+        app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
