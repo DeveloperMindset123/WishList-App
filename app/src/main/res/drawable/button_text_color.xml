@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:state_pressed="true" android:color="@android:color/black" android:background="@color/material_on_background_emphasis_medium"/>
+    <item android:state_enabled="true" android:color="@android:color/white" android:background="@color/material_dynamic_neutral_variant0" />
+    <item android:state_enabled="false" android:color="@android:color/darker_gray" android:background="@color/material_dynamic_secondary90"/>
+</selector>
+
+<!--We can use this file to determine how the color of the buttons will change depending on if they are being clicked or not-->

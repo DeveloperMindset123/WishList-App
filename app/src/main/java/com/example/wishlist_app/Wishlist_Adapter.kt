@@ -1,13 +1,16 @@
 package com.example.wishlist_app
 
-import android.text.Layout
-import com.example.wishlist_app.WishlistItem  //this is how we can import kotlin classes
+import android.text.SpannableString
+import android.text.SpannableStringBuilder
+import android.text.Spanned
+import android.text.method.LinkMovementMethod
+import android.text.style.URLSpan
+import android.text.util.Linkify
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import java.text.ParsePosition
 
 //this is the adapter that we will use to connect the main activity file to the data model
 
@@ -31,7 +34,7 @@ class WishlistAdapter(private val WishList_items: ArrayList<WishlistItem>) : Rec
      * We can break down the components in the line in the following manner:
      * 'class WishListAdapter': This declares a new class named 'WishlistAdapter'.
      *
-     * (private val WihsList_items: ArrayList<WishListItem>): This is the primary constructor of the WishListAdapter class. It takes a single parameter 'WishList_items' which is a essentially a list of WishListItem objects.
+     * (private val WishList_items: ArrayList<WishListItem>): This is the primary constructor of the WishListAdapter class. It takes a single parameter 'WishList_items' which is a essentially a list of WishListItem objects.
      *
      * The list is what the adapter will use to bind data to the views that are displayed within the Recyclerview. The 'private val' means that this parameter is a private immutable property of instances 'WishlistAdapter'.
      *
@@ -51,6 +54,14 @@ class WishlistAdapter(private val WishList_items: ArrayList<WishlistItem>) : Rec
      * (custom viewholder)
      *
      * */
+
+    // Add a nullable OnBottomReachedListener variable
+    private var onBottomReachedListener: OnBottomReachedListener? = null
+
+    // Add a method to set the listener (this serves as a setter)
+    fun setOnBottomReachedListener(listener: MainActivity) {
+        onBottomReachedListener = listener
+    }
 
     class ViewHolder(view : View) : RecyclerView.ViewHolder(view)  //we are passing in the view within the ViewHolder, which as stated earlier, acts as a wrapper
     {
@@ -109,14 +120,50 @@ class WishlistAdapter(private val WishList_items: ArrayList<WishlistItem>) : Rec
         viewHolder.DisplayLink.text=item.itemLink
         viewHolder.DisplayPrice.text=item.itemPrice
 
+        //added funcitonality to check if we have reached the bottom of the screen
+        // Check if we've reached the bottom
+        if (position == itemCount - 1) {
+            onBottomReachedListener?.onBottomReached(position)
+        }
+
         //one method is to save the user input onto three individual arrays of strings, or simply pass in the dataModel and the corresponding position, because we would have to save the data in one place (thus the uses of data model since existing datatypes may not be suitable for the logic related to the program)
 
         //This function doesn't return anything, consider this a void function, if the function did indeed return something, we would have had to specify prior to the {}, right after the parameter, using :
+
+        //replace URL links with clickable link that says "click here"
+        //Set link color in TextView in xml
+        //import the classes, replace all instances of link by "Click Here"
+        val spannableStringBuilder = SpannableStringBuilder(item.itemLink)
+        Linkify.addLinks(spannableStringBuilder, Linkify.WEB_URLS)
+/*
+        for (urlSpan in spannableStringBuilder.getSpans(0, spannableStringBuilder.length, URLSpan::class.java)) {
+            val start = spannableStringBuilder.getSpanStart(urlSpan)
+            val end = spannableStringBuilder.getSpanEnd(urlSpan)
+            val customLinkSpannableString = SpannableString("Click here")
+            customLinkSpannableString.setSpan(URLSpan(urlSpan.url), 0, customLinkSpannableString.length, SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE)
+            spannableStringBuilder.replace(start, end, customLinkSpannableString)
+        } */
+        // Prepare the SpannableString with "Click here" text (replacing the previous code body with this alongside removing android:autoLink="all" tag within the link EditText and TextView as well as enabling internet permission helped fix the issue)
+        val spannableString = SpannableString("Click here")
+        spannableString.setSpan(URLSpan(item.itemLink), 0, spannableString.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+
+        // Set the SpannableString to the TextView and make the link clickable
+        viewHolder.DisplayLink.text = spannableString
+        viewHolder.DisplayLink.movementMethod = LinkMovementMethod.getInstance()
+
+
     }
 
 //define the last of the three methods
 
     override fun getItemCount() = WishList_items.size  //simply returns the size of the Wishlist_items array
+
+    // Inside WishlistAdapter class, add a method to update its dataset
+    fun updateDataSet(newList: ArrayList<WishlistItem>) {
+        WishList_items.clear()
+        WishList_items.addAll(newList)
+        notifyDataSetChanged()
+    }
 }
 
 /**
