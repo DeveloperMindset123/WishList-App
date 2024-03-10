@@ -4,33 +4,34 @@ Submitted by: **Ayan Das**
 
 **Name of your app** is a wishlist app that helps the user keep track of what they want to buy.
 
-Time spent: **X** hours spent in total
+Time spent: **15** hours spent in total
 
 ## Required Features
 
 The following **required** functionality is completed:
 
-- [ ] **User can add an item to their wishlist**
-- [ ] **User can see their list of items based on previously inputted items**
+- [x] **User can add an item to their wishlist**
+- [x] **User can see their list of items based on previously inputted items**
 
 The following **optional** features are implemented:
 
-- [ ] Wishlist app is 🎨 **customized** 🎨
+- [x] Wishlist app is 🎨 **customized** 🎨
 - [ ] User can delete an item by long pressing on the item
-- [ ] User can open an item's URL by clicking on the item
+- [x] User can open an item's URL by clicking on the item
 
 The following **additional** features are implemented:
 
-* [ ] List anything else that you can get done to improve the app functionality!
+* [x] Change text color when Button is pressed, added a refresh element.
 
 ## Video Walkthrough
 
 Here's a walkthrough of implemented user stories:
 
-<img src='http://i.imgur.com/link/to/your/gif/file.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbThhYzdqd2M4d2RubndlZGs0Z2ZkeWdueHByd2w0dmg0bDhwbHF4aiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/jTQ8soh0I2SlA0K8w0/giphy.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 <!-- Replace this with whatever GIF tool you used! -->
 GIF created with ...  
+[Kap](https://getkap.co/) for macOS
 <!-- Recommended tools:
 [Kap](https://getkap.co/) for macOS
 [ScreenToGif](https://www.screentogif.com/) for Windows
@@ -38,7 +39,7 @@ GIF created with ...
 
 ## Notes
 
-Describe any challenges encountered while building the app.
+Aligning the EditText views and also figuring out how to replace URL links with a placeholder text, links wasn't initially working and internet sources were telling me to set Android:autoLink="all" and android:clickable="true" will fix it but it was interfering with the spannable and URL span logic that I defined in my onBindViewHolder. Nonetheless, it was a good way for me to learn about Recycler View and I enjoyed it.
 
 ## License
 
